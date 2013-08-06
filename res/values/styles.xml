@@ -1,0 +1,7 @@
+<resources>
+
+    <style name="AlertBox" parent="android:Theme.Black" />
+
+    <style name="AppTheme" parent="android:Theme.Light" />
+        
+</resources>

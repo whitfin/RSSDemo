@@ -1,0 +1,7 @@
+<resources>
+
+    <string name="app_name">RSS Demo</string>
+    <string name="title">Title goes here!</string>
+    <string name="date">Date goes here!</string>
+
+</resources>
