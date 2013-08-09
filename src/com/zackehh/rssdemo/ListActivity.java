@@ -2,7 +2,6 @@ package com.zackehh.rssdemo;
 
 import com.zackehh.rssdemo.R;
 import com.zackehh.rssdemo.parser.RSSFeed;
-import com.zackehh.rssdemo.parser.RSSUtil;
 import com.zackehh.rssdemo.util.LoadRSSFeed;
 import com.zackehh.rssdemo.util.WriteObjectFile;
 
@@ -28,6 +27,8 @@ import android.widget.ListView;
  */
 public class ListActivity extends Activity {
 
+	// Check if we refreshed
+	private boolean isRefresh = false;
 	// The adapter for the list
 	private ListAdapter adapter;
 	// The list to display it in
@@ -76,18 +77,31 @@ public class ListActivity extends Activity {
 		// Depending on what's pressed
 		switch (item.getItemId()) {
 		case 0:
+			// We're refreshing
+			isRefresh = true;
 			// Start parsing the feed again
-			new LoadRSSFeed(this, RSSUtil.RSSFEEDURL).execute();
+			new LoadRSSFeed(this, RSSFEEDURL).execute();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
 		// Exit instead of going to splash screen
 		adapter.notifyDataSetChanged();
 	}
-}
 
+	@Override 
+	public void onResume(){
+		super.onResume();
+		// This is awful, but don't change it until I work out another way
+		if(isRefresh){
+			feed = (RSSFeed)new WriteObjectFile(this).readObject("souldevteam.net");
+			adapter = new ListAdapter(ListActivity.this, feed);
+			list.setAdapter(adapter); 
+			isRefresh = false;
+		}
+	}
+}

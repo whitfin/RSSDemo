@@ -34,5 +34,4 @@ public class PostActivity extends InlineBrowser {
 		// Load the URL
 		browser.loadUrl(feed.getItem(position).getURL());
 	}
-
 }

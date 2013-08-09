@@ -1,7 +1,7 @@
 package com.zackehh.rssdemo;
 
 import com.zackehh.rssdemo.R;
-import com.zackehh.rssdemo.parser.RSSUtil;
+import static com.zackehh.rssdemo.parser.RSSUtil.*;
 import com.zackehh.rssdemo.util.LoadRSSFeed;
 
 import android.app.Activity;
@@ -73,7 +73,7 @@ public class InitActivity extends Activity {
 				// Set the content view
 				setContentView(R.layout.splash);
 				// Load the RSS Feed
-				new LoadRSSFeed(this, RSSUtil.RSSFEEDURL).execute();
+				new LoadRSSFeed(this, RSSFEEDURL).execute();
 			}
 		} else {
 			// Start the new activity
