@@ -2,8 +2,8 @@ package com.zackehh.rssdemo;
 
 import com.zackehh.rssdemo.R;
 import static com.zackehh.rssdemo.parser.RSSUtil.*;
-import com.zackehh.rssdemo.util.LoadRSSFeed;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -23,16 +23,22 @@ import android.widget.TextView;
  * as a placeholder in case you're loading a lot of data.
  * 
  * @author Isaac Whitfield
- * @version 06/08/2013
+ * @version 14/08/2013
  */
 public class InitActivity extends Activity {
 
 	// Keep track of when feed exists
 	private SharedPreferences prefs;
 
+	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		// If we're above Honeycomb
+		if(android.os.Build.VERSION.SDK_INT >= 11){
+			// Remove the icon from the ActionBar
+			getActionBar().setDisplayShowHomeEnabled(false);
+		}
 		// Get our preferences
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		// Check if a feed exists
@@ -70,10 +76,8 @@ public class InitActivity extends Activity {
 				// Center the title of the dialog
 				((TextView)alert.findViewById((getResources().getIdentifier("alertTitle", "id", "android")))).setGravity(Gravity.CENTER);
 			} else {
-				// Set the content view
-				setContentView(R.layout.splash);
-				// Load the RSS Feed
-				new LoadRSSFeed(this, RSSFEEDURL).execute();
+				// Change the feed
+				changeFeed(false, this);
 			}
 		} else {
 			// Start the new activity

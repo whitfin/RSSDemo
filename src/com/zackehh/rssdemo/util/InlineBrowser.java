@@ -26,7 +26,7 @@ import android.widget.ProgressBar;
  * exit the activity.
  * 
  * @author Isaac Whitfield
- * @version 06/08/2013
+ * @version 14/08/2013
  */
 public class InlineBrowser extends Activity {
 
@@ -128,11 +128,17 @@ public class InlineBrowser extends Activity {
 		}
 	}
 
+	@SuppressLint({ "InlinedApi", "NewApi" })
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		// Create a "back" menu option to go back to the parent activity
-		menu.add(Menu.NONE, 0, Menu.NONE, "BACK");
+		MenuItem back = menu.add(Menu.NONE, 0, Menu.NONE, "BACK");
+		// If we're on Honeycomb or above
+		if(android.os.Build.VERSION.SDK_INT >= 11){
+			// Show the back button always
+			back.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+		}
 		return true;
 	}
 
