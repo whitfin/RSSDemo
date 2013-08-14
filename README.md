@@ -7,6 +7,8 @@ So, here is an example application which should teach you how to work with RSS f
 
 It doesn't include anything flashy, but it's fairly simple to change to allow a user to input their desired feed, and to make it look better.
 
+You can find the example application on [Google Play](https://play.google.com/store/apps/details?id=com.zackehh.rssdemo), in case you want to try it out first.
+
 This code is protected via the default GitHub copyright license such that:
 
 <i>Code without an explicit license is protected by copyright and is by default All Rights Reserved. The person or people who wrote the code are protected as such. Any time you're using software you didn't write, licensing should be considered and abided.</i>
