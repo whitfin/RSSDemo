@@ -6,6 +6,7 @@ import com.zackehh.rssdemo.util.WriteObjectFile;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
@@ -32,11 +33,16 @@ public class OfflineActivity extends Activity {
 	private WebView browser;
 
 	@SuppressWarnings("deprecation")
-	@SuppressLint("SetJavaScriptEnabled")
+	@SuppressLint({ "SetJavaScriptEnabled", "NewApi" })
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.offline_reading);
+		// If we're above Honeycomb
+		if(android.os.Build.VERSION.SDK_INT >= 11){
+			// Remove the icon from the ActionBar
+			getActionBar().setDisplayShowHomeEnabled(false);
+		}
 		// Enable the vertical fading edge (by default it is disabled)
 		((ScrollView)findViewById(R.id.scrollview)).setVerticalFadingEdgeEnabled(true);
 		// Get the feed object
@@ -58,6 +64,13 @@ public class OfflineActivity extends Activity {
 		browser.loadDataWithBaseURL("http://blog.zackehh.com/", feed.getItem(position).getDescription(), "text/html", "UTF-8", null);
 	}
 
+	@Override
+	public void onBackPressed(){
+		super.onBackPressed();
+		startActivity(new Intent(this, ListActivity.class));
+		finish();
+	}
+	
 	@SuppressLint({ "InlinedApi", "NewApi" })
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -76,8 +89,7 @@ public class OfflineActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case 0:
-			// Finish the activity
-			finish();
+			onBackPressed();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
