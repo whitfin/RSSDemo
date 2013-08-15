@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.preference.PreferenceManager;
 import android.view.Gravity;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -80,7 +81,7 @@ public class RSSUtil {
 		.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
 			public void onClick(DialogInterface dialog, int whichButton){
 				// If it's during initial loading
-				if(!refresh){
+				if(!PreferenceManager.getDefaultSharedPreferences(context).getBoolean("isSetup", false)){
 					// Exit the application
 					((Activity)context).finish();
 				} else {
