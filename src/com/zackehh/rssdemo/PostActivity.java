@@ -5,7 +5,10 @@ import com.zackehh.rssdemo.parser.RSSUtil;
 import com.zackehh.rssdemo.util.InlineBrowser;
 import com.zackehh.rssdemo.util.WriteObjectFile;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 /**
  * Displays a chosen post from the RSS feed and displays
@@ -31,7 +34,21 @@ public class PostActivity extends InlineBrowser {
 		position = getIntent().getExtras().getInt("pos");
 		// Set the title based on the post
 		setTitle(feed.getItem(position).getTitle());
+		// To check if offline reading is needed
+		browser.setWebViewClient(new WebViewClient(){
+			@Override
+			public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+				if(errorCode != -1){
+					startActivity(new Intent(getBaseContext(), OfflineActivity.class).putExtra("pos", position));
+				}
+			}
+			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+				view.loadUrl(url);
+				return true;
+			}
+		});
 		// Load the URL
 		browser.loadUrl(feed.getItem(position).getURL());
+
 	}
 }

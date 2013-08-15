@@ -5,6 +5,9 @@ import com.zackehh.rssdemo.R;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
 import android.view.Menu;
@@ -67,6 +70,8 @@ public class InlineBrowser extends Activity {
 		browserSettings.setAllowFileAccess(true);
 		browserSettings.setAppCacheEnabled(true);
 		browserSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+		// If offline, use cache only
+		if(!isConnected()) browserSettings.setCacheMode(3);
 		// Create a new dialog to inform of the loading
 		loadingDialog = new ProgressDialog(new ContextThemeWrapper(this, R.style.AlertBox));
 		// Set the text of the dialog
@@ -167,5 +172,17 @@ public class InlineBrowser extends Activity {
 		super.onPause();
 		// Override transition for entering the activity
 		overridePendingTransition(0, 0);
+	}
+
+	private boolean isConnected(){
+		ConnectivityManager conMgr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+		if(conMgr.getActiveNetworkInfo() != null){
+			NetworkInfo activeInfo = conMgr.getActiveNetworkInfo();
+			if(!activeInfo.isConnected() || !activeInfo.isAvailable()){
+				return false;
+			}
+			return true;
+		}
+		return false;
 	}
 }
