@@ -7,7 +7,7 @@ So, here is an example application which should teach you how to work with RSS f
 
 It doesn't include anything flashy, but it's fairly simple to change to allow a user to input their desired feed, and to make it look better.
 
-Simply place your feed URL inside the `RSSUtil` class, and try it out.
+You can find the example application on [Google Play](https://play.google.com/store/apps/details?id=com.zackehh.rssdemo), in case you want to try it out first.
 
 This code is protected via the default GitHub copyright license such that:
 
